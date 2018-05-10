@@ -1,6 +1,6 @@
+from sklearn.neural_network import MLPClassifier
 import pandas
 import numpy as np
-from sklearn.svm import SVC, LinearSVC
 from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 
@@ -9,13 +9,8 @@ colnames = ['idVideo', 'numberOfViews', 'likes', 'dislikes', 'mistakes', 'presen
 data = pandas.read_csv('C:/Users/yulia/videodataWork.csv', usecols=colnames)
 surveyData = data[data['mistakes'].notnull()]
 surveyData.to_csv('C:/Users/yulia/surveyData.csv', sep=',')
-#surveyData.fillna(0)
-# print(np.any(np.isnan(surveyData)))
-# print(np.all(np.isfinite(surveyData)))
 
-# print(len(surveyData))
-# choose size of training and test set
-trainingSet = surveyData.tail(n=70)
+trainingSet = surveyData.tail(n=80)
 testSet = surveyData.head(n=20)
 
 # choose columns for training set
@@ -31,7 +26,7 @@ for predData in tests:
     # clf = SVC()
     # print(clf.fit(X, y))
 
-    clf = LinearSVC(random_state=0)
+    clf = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(5,2), random_state=1)
     clf.fit(X, y)
 
 
